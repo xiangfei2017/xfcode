@@ -50,6 +50,7 @@ for sk1,sv1 in state.items():
             sg.setdefault(sk1,[])
          sg[sk1].append(sk2)
 
+
 pprint.pprint(sg)
 flag={}
 for k in state.keys():
