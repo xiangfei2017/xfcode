@@ -4,7 +4,7 @@ import mathdiffer as df
 x=df.TN(2,'x')
 y=df.TN(3,'y')
 
-z=x*df.sin(x)
+z=x**2*df.sin(x)
 g=z.grad(x)
 
 print('z=',z)
