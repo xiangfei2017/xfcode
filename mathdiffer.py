@@ -367,6 +367,12 @@ class TN:
             else:
                 return -1
                 
+        def addleftneg(rv):
+            s=f'-{rv}'
+            if '--' in s:
+                s=rv[1:]
+            return s
+                
         s=self.getpostsort()
         values=[]
         for v in s:
@@ -379,10 +385,10 @@ class TN:
                 r=values.pop()
                 ro=r[0]
                 rv=r[1]
-                if cmpopr(v,ro)>=0:
+                if cmpopr(v,ro)>0:
                     exp=(v,f'-({rv})')
                 else:
-                    exp=(v,f'-{rv}')
+                    exp=(v,addleftneg(rv))
             elif v=='pos':
                 r=values.pop()
                 rv=r[1]
@@ -428,7 +434,7 @@ class TN:
                         exp=('','0.0')
                 elif (v=='-') and ('0.0' in [lv,rv]):
                     if lv=='0.0' and rv!='0.0':
-                        exp=('',f'-({rv})')
+                        exp=('',addleftneg(rv))
                     elif lv!='0.0' and rv=='0.0':
                         exp=('',lv)
                     else:
@@ -442,11 +448,20 @@ class TN:
                         exp=('',lv)
                     else:
                         exp=('','1.0')
-                elif (v=='/')and((lv=='0.0')or(rv=='1.0')):
+                elif (v=='*') and ('-1.0' in [lv,rv]):
+                    if lv=='-1.0' and rv!='-1.0':
+                        exp=('',addleftneg(rv))
+                    elif lv!='-1.0' and rv=='-1.0':
+                        exp=('',addleftneg(lv))
+                    else:
+                        exp=('','1.0')
+                elif (v=='/')and((lv=='0.0')or(rv=='1.0')or(rv=='-1.0')):
                     if lv=='0.0':
                         exp=('','0.0')
-                    else:
+                    elif rv=='1.0':
                         exp=('',lv)
+                    else:
+                        exp=('',addleftneg(lv))
                 elif (v=='**')and(('1.0' in [lv,rv])or('0.0' in [lv,rv])):
                     if lv=='1.0':
                         exp=('','1.0')
