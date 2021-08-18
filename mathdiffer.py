@@ -498,7 +498,106 @@ class TN:
                 
     #end def
     
+    def update(self):
+        if len(self.fromvars)==0:
+            return self.data
+            
+        op=self.fromvars[0]
+        a=self.fromvars[1]
+        
+        if op=='+':
+            b=self.fromvars[2]
+            v1=(a.update() if isinstance(a,TN) else a)
+            v2=(b.update() if isinstance(b,TN) else b)
+            self.data = v1+v2
+            return self.data
+            
+        elif op=='-':
+            b=self.fromvars[2]
+            v1=(a.update() if isinstance(a,TN) else a)
+            v2=(b.update() if isinstance(b,TN) else b)
+            self.data = v1-v2
+            return self.data
+            
+        elif op=='*':
+            b=self.fromvars[2]
+            v1=(a.update() if isinstance(a,TN) else a)
+            v2=(b.update() if isinstance(b,TN) else b)
+            self.data = v1*v2
+            return self.data
+            
+        elif op=='/':
+            b=self.fromvars[2]
+            v1=(a.update() if isinstance(a,TN) else a)
+            v2=(b.update() if isinstance(b,TN) else b)
+            self.data = v1/v2
+            return self.data
+            
+        elif op=='**':
+            b=self.fromvars[2]
+            v1=(a.update() if isinstance(a,TN) else a)
+            v2=(b.update() if isinstance(b,TN) else b)
+            self.data = v1**v2
+            return self.data
+         
+        elif op=='neg':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = -v1
+            return self.data
+            
+        elif op=='pos':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = v1
+            return self.data
+            
+        elif op=='log':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = log(v1)
+            return self.data
+            
+        elif op=='exp':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = exp(v1)
+            return self.data
+            
+        elif op=='sin':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = sin(v1)
+            return self.data
+        
+        elif op=='cos':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = cos(v1)
+            return self.data
+            
+        elif op=='tan':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = tan(v1)
+            return self.data
+        elif op=='cot':
+            v1=(a.update() if isinstance(a,TN) else a)
+            self.data = cot(v1)
+            return self.data
+    #end of update
+
+    def create_func(self,x):
+        def func(x1):
+            x.data = x1
+            return self.update()
+        return func
+
+    def diff(self,x):
+        g=self.grad(x)
+        # f=g.create_func(x)
+        # return f
+        def func(x1):
+            x.data = x1
+            return g.update()
+        return func
 #end of class
 
-
+def get_diff(func):
+    x=TN(0)
+    temp=func(x)
+    return temp.diff(x)
 
