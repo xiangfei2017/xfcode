@@ -1,9 +1,3 @@
-cr.py
-mathdiffer.py
-t.py
-test.py
-testdiffer.py
-tk.py
 import os
 import math
 
