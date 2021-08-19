@@ -1,0 +1,1 @@
+/data/data/com.termux/files/usr/bin/c++ -O2 -g -DNDEBUG CMakeFiles/Demo.dir/main.cc.o CMakeFiles/Demo.dir/pow.cc.o -o Demo 
