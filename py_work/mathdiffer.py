@@ -1,3 +1,9 @@
+cr.py
+mathdiffer.py
+t.py
+test.py
+testdiffer.py
+tk.py
 import os
 import math
 
@@ -597,7 +603,7 @@ class TN:
 #end of class
 
 def get_diff(func):
-    x=TN(0)
+    x=TN(1)
     temp=func(x)
     return temp.diff(x)
 
